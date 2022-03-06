@@ -1,6 +1,7 @@
--- 
+-- Convert Integer to its digits (note: fails for input == 0)
 toDigits :: Integer -> [Integer]
-toDigits x = [x `mod` 10] ++ toDigits (x `div` 10)
+toDigits 0 = []
+toDigits x = toDigits (x `div` 10) ++ [x `mod` 10]
 
 -- Double every other element
 doubleEveryOther :: [Integer] -> [Integer]
@@ -17,3 +18,10 @@ sumDigits (x:xs) = sum (toDigits x) + sumDigits xs
 -- Validate Credit Card Number
 validate :: Integer -> Bool
 validate x = sumDigits(doubleEveryOther(toDigits(x))) `mod` 10 == 0
+
+-- Moves n weighted plates from Peg A to Peg B. Tower of Hanoi
+type Peg = String
+type Move = (Peg, Peg)
+hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+hanoi 0 a b c = []
+hanoi n a b c = hanoi (n-1) a c b ++ [(a, b)] ++ hanoi (n-1) c b a
